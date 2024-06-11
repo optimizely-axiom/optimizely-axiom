@@ -1,15 +1,11 @@
 import clsx from "clsx";
 import { type ComponentPropsWithRef, type ReactNode, forwardRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 import type { ExtendProps } from "../utils";
 
 import { Box } from "../box";
-import {
-  type ParentRecipeVariants,
-  type TextAreaRecipeVariants,
-  parentBoxRecipe,
-  textAreaBoxRecipe,
-} from "./Textarea.css";
+import * as styles from "./Textarea.css";
 
 type TextareaProps = ExtendProps<
   ComponentPropsWithRef<"textarea">,
@@ -22,8 +18,8 @@ type TextareaProps = ExtendProps<
     isInvalid?: boolean;
     isResizeable?: boolean;
     topSection?: ReactNode;
-  } & ParentRecipeVariants &
-    TextAreaRecipeVariants
+  } & styles.ParentRecipeVariants &
+    styles.TextAreaRecipeVariants
 >;
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -48,7 +44,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       <Box
         aria-invalid={isInvalid}
         border="1"
-        className={clsx(parentBoxRecipe({}))}
+        className={clsx(styles.parentBoxRecipe({}))}
         data-disabled={isDisabled}
         {...props}
         style={{
@@ -56,16 +52,29 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         }}
       >
         {topSection && <Box>{topSection}</Box>}
-        <Box asChild className={clsx(textAreaBoxRecipe({}), className)}>
-          <textarea
-            defaultValue={defaultValue}
-            placeholder={placeholder}
-            ref={ref}
-            rows={rows}
-            style={{
-              resize: "none",
-            }}
-          ></textarea>
+        <Box asChild className={clsx(styles.textAreaBoxRecipe({}), className)}>
+          {autoResize ? (
+            <TextareaAutosize
+              defaultValue={defaultValue}
+              placeholder={placeholder}
+              ref={ref}
+              style={
+                {
+                  // resize: "none", // Need to fix
+                }
+              }
+            ></TextareaAutosize>
+          ) : (
+            <textarea
+              defaultValue={defaultValue}
+              placeholder={placeholder}
+              ref={ref}
+              rows={rows}
+              style={{
+                resize: "none",
+              }}
+            ></textarea>
+          )}
         </Box>
         {bottomSection && <Box>{bottomSection}</Box>}
       </Box>

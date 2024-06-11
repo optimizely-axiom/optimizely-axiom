@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button, Text, Textarea } from "@optiaxiom/react";
+import { Button, Flex, Text, Textarea } from "@optiaxiom/react";
 
 const meta: Meta<typeof Textarea> = {
   component: Textarea,
@@ -32,8 +32,14 @@ export const Custom: Story = {
     topSection: <Text>Sample</Text>,
   },
 };
+export const AutoResizeable: Story = {
+  args: {
+    autoResize: true,
+    placeholder: "Write your text",
+  },
+};
 
-/* export const TypesOfTextarea: Story = {
+export const TypesOfTextarea: Story = {
   render: () => (
     <Flex flexDirection="column" gap="xl">
       <Textarea
@@ -59,4 +65,3 @@ export const Custom: Story = {
     </Flex>
   ),
 };
- */

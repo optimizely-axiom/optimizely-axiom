@@ -44,7 +44,6 @@ export const parentBoxRecipe = recipe({
         borderColor: "border.brand",
       },
     },
-    // rounded: "sm",
   },
   variants: {},
 });
