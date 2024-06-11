@@ -1,6 +1,5 @@
 export * from "./avatar";
 export * from "./box";
-
 export * from "./button";
 export * from "./code";
 export * from "./flex";
@@ -15,5 +14,6 @@ export * from "./skeleton";
 export * from "./sprinkles";
 export * from "./styles";
 export * from "./text";
+export * from "./textarea";
 export * from "./tokens";
 export * from "./tooltip";
