@@ -11,7 +11,7 @@ type TextareaProps = ExtendProps<
   ComponentPropsWithRef<"textarea">,
   ComponentPropsWithRef<typeof Box>,
   {
-    autoResize?: boolean;
+    autosize?: boolean;
     bottomSection?: ReactNode;
     defaultValue?: string;
     isDisabled?: boolean;
@@ -25,7 +25,7 @@ type TextareaProps = ExtendProps<
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
-      autoResize,
+      autosize,
       bottomSection,
       className,
       defaultValue,
@@ -40,41 +40,33 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref,
   ) => {
+    const Component = autosize ? TextareaAutosize : "textarea";
+
     return (
       <Box
         aria-invalid={isInvalid}
-        border="1"
         className={clsx(styles.parentBoxRecipe({}))}
         data-disabled={isDisabled}
         {...props}
         style={{
-          resize: isResizeable ? "both" : "none",
+          resize: isResizeable ? "vertical" : "none",
         }}
       >
         {topSection && <Box>{topSection}</Box>}
         <Box asChild className={clsx(styles.textAreaBoxRecipe({}), className)}>
-          {autoResize ? (
-            <TextareaAutosize
+          <Box
+            asChild
+            style={{
+              resize: "none", // Need to fix
+            }}
+          >
+            <Component>
+              {/* @ts-expect-error - Fix the reference  */}
+              {/* ref={ref} */}
               defaultValue={defaultValue}
               placeholder={placeholder}
-              ref={ref}
-              style={
-                {
-                  // resize: "none", // Need to fix
-                }
-              }
-            ></TextareaAutosize>
-          ) : (
-            <textarea
-              defaultValue={defaultValue}
-              placeholder={placeholder}
-              ref={ref}
-              rows={rows}
-              style={{
-                resize: "none",
-              }}
-            ></textarea>
-          )}
+            </Component>
+          </Box>
         </Box>
         {bottomSection && <Box>{bottomSection}</Box>}
       </Box>

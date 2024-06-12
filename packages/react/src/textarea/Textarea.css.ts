@@ -25,6 +25,7 @@ export const parentBoxRecipe = recipe({
     flexDirection: "column",
     fontSize: "md",
     overflow: "auto",
+
     selectors: {
       "&:aria-invalid": {
         borderColor: "border.error",
