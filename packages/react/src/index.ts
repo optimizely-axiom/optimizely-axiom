@@ -12,7 +12,7 @@ export * from "./input";
 export * from "./kbd";
 export * from "./paper";
 export * from "./progress";
-export * from "./radio";
+export * from "./radioGroup";
 export * from "./separator";
 export * from "./skeleton";
 export * from "./sprinkles";
