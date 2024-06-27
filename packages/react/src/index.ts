@@ -4,6 +4,7 @@ export * from "./box";
 export * from "./button";
 export * from "./code";
 export * from "./field";
+export * from "./file-uploader";
 export * from "./flex";
 export * from "./grid";
 export * from "./heading";
