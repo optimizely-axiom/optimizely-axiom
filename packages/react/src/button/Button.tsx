@@ -21,9 +21,9 @@ type ButtonProps = ExtendProps<
     appearance?: keyof typeof appearances;
     children?: ReactNode;
     disabled?: boolean;
+    icon?: ReactNode;
+    iconPosition?: "end" | "start";
     isLoading?: boolean;
-    leftSection?: ReactNode;
-    rightSection?: ReactNode;
   } & styles.ButtonVariants
 >;
 
@@ -36,10 +36,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       colorScheme,
       disabled,
+      icon,
+      iconPosition = "start",
       isLoading,
-      leftSection,
       onClick,
-      rightSection,
       size = "md",
       variant,
       ...props
@@ -53,7 +53,21 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const finalVariant = variant ?? presetProps.variant;
 
     const isDisabled = disabled || isLoading;
-
+    const content = (
+      <>
+        {icon && iconPosition === "start" && (
+          <Box className={styles.icon({ position: iconPosition, size: size })}>
+            {icon}
+          </Box>
+        )}
+        <Slottable>{children}</Slottable>
+        {icon && iconPosition === "end" && (
+          <Box className={styles.icon({ position: iconPosition, size: size })}>
+            {icon}
+          </Box>
+        )}
+      </>
+    );
     return (
       <Box
         aria-disabled={isDisabled}

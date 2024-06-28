@@ -157,4 +157,62 @@ export const button = recipe({
   ],
 });
 
+export const icon = recipe({
+  base: {
+    alignItems: "center",
+    display: "inline-flex",
+    fontSize: "inherit",
+    justifyContent: "center",
+  },
+  compoundVariants: [
+    {
+      style: {
+        paddingRight: theme.spacing[2],
+      },
+      variants: {
+        position: "start",
+        size: "md",
+      },
+    },
+    {
+      style: {
+        paddingRight: theme.spacing[4],
+      },
+      variants: {
+        position: "start",
+        size: "lg",
+      },
+    },
+    {
+      style: {
+        paddingLeft: theme.spacing[2],
+      },
+      variants: {
+        position: "end",
+        size: "md",
+      },
+    },
+    {
+      style: {
+        paddingLeft: theme.spacing[4],
+      },
+      variants: {
+        position: "end",
+        size: "lg",
+      },
+    },
+  ],
+  variants: {
+    position: {
+      end: {},
+      start: {},
+    },
+    size: {
+      sm: {},
+      md: {},
+      lg: {},
+    },
+  },
+});
+
 export type ButtonVariants = RecipeVariants<typeof button>;
