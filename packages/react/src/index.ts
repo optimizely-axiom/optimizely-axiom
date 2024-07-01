@@ -1,9 +1,13 @@
 export * from "./avatar";
 export * from "./box";
-
 export * from "./button";
 export * from "./button-group";
 export * from "./code";
+export * from "./dialog";
+export * from "./dialog-content";
+export * from "./dialog-footer";
+export * from "./dialog-title";
+export * from "./dialog-trigger";
 export * from "./field";
 export * from "./flex";
 export * from "./grid";
