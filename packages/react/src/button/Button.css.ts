@@ -5,6 +5,7 @@ import { type RecipeVariants, recipe } from "../vanilla-extract";
 const accentColorVar = createVar();
 const solidAccentColorVar = createVar();
 const subtleAccentColorVar = createVar();
+const internalSpaceVar = createVar();
 
 export const button = recipe({
   base: [
@@ -155,6 +156,59 @@ export const button = recipe({
       },
     },
   ],
+});
+
+export const icon = recipe({
+  variants: {
+    size: {
+      sm: style({
+        vars: {},
+      }),
+      md: style({
+        vars: {},
+      }),
+      lg: style({
+        vars: {},
+      }),
+    },
+  },
+});
+
+export const section = recipe({
+  base: {
+    alignItems: "center",
+    display: "inline-flex",
+    fontSize: "inherit",
+    justifyContent: "center",
+  },
+
+  variants: {
+    position: {
+      end: style({
+        paddingLeft: internalSpaceVar,
+      }),
+      start: style({
+        paddingRight: internalSpaceVar,
+      }),
+    },
+    size: {
+      sm: style({
+        vars: {
+          [internalSpaceVar]: "0",
+        },
+      }),
+      md: style({
+        vars: {
+          [internalSpaceVar]: theme.spacing[2],
+        },
+      }),
+      lg: style({
+        vars: {
+          [internalSpaceVar]: theme.spacing[4],
+        },
+      }),
+    },
+  },
 });
 
 export type ButtonVariants = RecipeVariants<typeof button>;

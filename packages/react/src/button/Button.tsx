@@ -1,12 +1,19 @@
 import { Slot, Slottable } from "@radix-ui/react-slot";
-import { type ComponentPropsWithRef, type ReactNode, forwardRef } from "react";
+import {
+  type ComponentPropsWithRef,
+  type ReactNode,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+} from "react";
 
 import type { ExtendProps } from "../utils";
 
 import { Box } from "../box";
+import { Text } from "../text";
 import * as styles from "./Button.css";
 
-const presets = {
+const appearances = {
   danger: { colorScheme: "danger", variant: "solid" },
   "danger-outline": { colorScheme: "danger", variant: "outline" },
   default: { colorScheme: "secondary", variant: "outline" },
@@ -18,28 +25,28 @@ type ButtonProps = ExtendProps<
   ComponentPropsWithRef<"button">,
   ComponentPropsWithRef<typeof Box>,
   {
+    appearance?: keyof typeof appearances;
     children?: ReactNode;
     disabled?: boolean;
+    icon?: ReactNode;
+    iconPosition?: "end" | "start";
     isLoading?: boolean;
-    leftSection?: ReactNode;
-    preset?: keyof typeof presets;
-    rightSection?: ReactNode;
   } & styles.ButtonVariants
 >;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
+      appearance = "default",
       asChild,
       children,
       className,
       colorScheme,
       disabled,
+      icon,
+      iconPosition = "start",
       isLoading,
-      leftSection,
       onClick,
-      preset = "default",
-      rightSection,
       size = "md",
       variant,
       ...props
@@ -48,11 +55,56 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const Comp = asChild ? Slot : "button";
 
-    const presetProps = presets[preset];
+    const presetProps = appearances[appearance];
     const finalColorScheme = colorScheme ?? presetProps.colorScheme;
     const finalVariant = variant ?? presetProps.variant;
-
     const isDisabled = disabled || isLoading;
+
+    let content;
+    if (children) {
+      children =
+        asChild && isValidElement(children) ? (
+          cloneElement(
+            children,
+            undefined,
+            <Text
+              as="span"
+              fontSize="inherit"
+              style={{
+                padding: "0px 4px",
+              }}
+            >
+              {children.props.children}
+            </Text>,
+          )
+        ) : (
+          <Text as="span" fontSize="inherit">
+            {children}
+          </Text>
+        );
+
+      content = (
+        <>
+          {icon && iconPosition === "start" && (
+            <Box {...styles.section({ position: iconPosition, size: size })}>
+              {icon}
+            </Box>
+          )}
+          <Slottable>{children}</Slottable>
+          {icon && iconPosition === "end" && (
+            <Box {...styles.section({ position: iconPosition, size: size })}>
+              {icon}
+            </Box>
+          )}
+        </>
+      );
+    } else {
+      content = (
+        <Box asChild {...styles.icon({ size: size })}>
+          {icon}
+        </Box>
+      );
+    }
 
     return (
       <Box
@@ -70,11 +122,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...props}
       >
-        <Comp ref={ref}>
-          {leftSection}
-          <Slottable>{children}</Slottable>
-          {rightSection}
-        </Comp>
+        <Comp ref={ref}>{content}</Comp>
       </Box>
     );
   },
