@@ -98,6 +98,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           )}
         </>
       );
+    } else {
+      content = (
+        <Box asChild {...styles.icon({ size: size })}>
+          {icon}
+        </Box>
+      );
     }
 
     return (

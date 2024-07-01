@@ -158,6 +158,22 @@ export const button = recipe({
   ],
 });
 
+export const icon = recipe({
+  variants: {
+    size: {
+      sm: style({
+        vars: {},
+      }),
+      md: style({
+        vars: {},
+      }),
+      lg: style({
+        vars: {},
+      }),
+    },
+  },
+});
+
 export const section = recipe({
   base: {
     alignItems: "center",
